@@ -53,14 +53,18 @@ class Trajectory:
         min_depth = np.min(mission.cave_depth)
         max_height = np.max(mission.cave_height)
 
-        plt.fill_between(x_values, mission.cave_height, mission.cave_depth, color='blue', alpha=0.3)
-        plt.fill_between(x_values, mission.cave_depth, min_depth*np.ones(len(x_values)), 
+        plt.fill_between(x_values, mission.cave_height, mission.cave_depth, color='blue', alpha=0.3, label='Cave')
+        plt.fill_between(x_values, mission.cave_depth, min_depth*np.ones(len(x_values)),
+                         color='saddlebrown', alpha=0.3, label='Rock')
+        plt.fill_between(x_values, max_height*np.ones(len(x_values)), mission.cave_height,
                          color='saddlebrown', alpha=0.3)
-        plt.fill_between(x_values, max_height*np.ones(len(x_values)), mission.cave_height, 
-                         color='saddlebrown', alpha=0.3)
-        plt.plot(self.position[:, 0], self.position[:, 1], label='Trajectory')
-        plt.plot(mission.reference, 'r', linestyle='--', label='Reference')
+        plt.plot(self.position[:, 0], self.position[:, 1], label='Trajectory', linewidth=2)
+        plt.plot(mission.reference, 'r', linestyle='--', label='Reference', linewidth=2)
+        plt.xlabel('Horizontal Position (x)')
+        plt.ylabel('Depth (y)')
+        plt.title('UUV Mission: Trajectory vs Reference')
         plt.legend(loc='upper right')
+        plt.grid(True, alpha=0.3)
         plt.show()
 
 @dataclass
